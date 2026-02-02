@@ -1,0 +1,12 @@
+{
+  "logIn": "Local",
+  "password": "",
+  "Heroes": [
+    {
+      "name": "Grobul"
+    },
+    {
+      "name": "Elurion"
+    }
+  ]
+}
