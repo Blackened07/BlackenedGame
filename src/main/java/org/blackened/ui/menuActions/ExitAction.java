@@ -1,6 +1,6 @@
-package org.blackened.game.ui.menuActions.startActions;
+package org.blackened.ui.menuActions;
 
-import org.blackened.game.ui.menuActions.MenuAction;
+import org.blackened.ui.ActionResult;
 import org.blackened.service.GameSession;
 import org.blackened.view.View;
 
@@ -11,7 +11,7 @@ public class ExitAction extends MenuAction {
     }
 
     @Override
-    public void execute() {
+    public ActionResult execute() {
         System.exit(0);
     }
 }

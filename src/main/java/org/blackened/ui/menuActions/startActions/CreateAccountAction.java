@@ -1,6 +1,7 @@
-package org.blackened.game.ui.menuActions.startActions;
+package org.blackened.ui.menuActions.startActions;
 
-import org.blackened.game.ui.menuActions.MenuAction;
+import org.blackened.ui.ActionResult;
+import org.blackened.ui.menuActions.MenuAction;
 import org.blackened.service.GameSession;
 import org.blackened.view.GameMessages;
 import org.blackened.view.View;
@@ -14,18 +15,31 @@ public class CreateAccountAction extends MenuAction {
     }
 
     @Override
-    public void execute() {
+    public ActionResult execute() {
 
         getView().render(GameMessages.ACC_CREATION);
+        printExitText();
 
-        String login = enterLogin();
+        String login = getValidLine();
+
+        if (isInfoForExit(login)) {
+            return ActionResult.BACK;
+        }
 
         getView().render(GameMessages.ACC_CREATION_PASSWORD_PHASE, login);
 
-        String password = enterPassword();
+        String password = getValidLine();
+
+        if (isInfoForExit(login)) {
+            return ActionResult.BACK;
+        }
 
         invokeAccountFactory(login, password);
+
+        return ActionResult.CONTINUE;
     }
+
+
 
 
 }

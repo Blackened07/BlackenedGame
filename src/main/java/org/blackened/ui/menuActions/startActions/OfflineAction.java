@@ -1,6 +1,8 @@
-package org.blackened.game.ui.menuActions.startActions;
+package org.blackened.ui.menuActions.startActions;
 
-import org.blackened.game.ui.menuActions.MenuAction;
+import org.blackened.service.StorageType;
+import org.blackened.ui.ActionResult;
+import org.blackened.ui.menuActions.MenuAction;
 import org.blackened.service.GameSession;
 import org.blackened.utils.JsonReader;
 import org.blackened.view.GameMessages;
@@ -15,30 +17,42 @@ public class OfflineAction extends MenuAction {
 
     public OfflineAction(String title, View view, GameSession session) {
         super(title, view, session);
-
     }
 
     @Override
-    public void execute() {
+    public ActionResult execute() {
 
-        getSession().initLocalStorage();
+        ActionResult result;
+
+        getSession().initStorage(StorageType.OFFLINE);
 
         if (isLocalProfileExist()) {
-
+            /// ТУТ ТОЖЕ ПРИДЁТСЯ ВВОДИТЬ ДАННЫЕ!!!
             getSession().loadAccount();
 
         } else {
             getView().render(GameMessages.ACC_CREATION);
+            printExitText();
 
-            String login = enterLogin();
+            String login = getValidLine();
+
+            if (isInfoForExit(login)) {
+                return ActionResult.BACK;
+            }
 
             getView().render(GameMessages.ACC_CREATION_PASSWORD_PHASE, login);
 
-            String password = enterPassword();
+            String password = getValidLine();
+
+            if (isInfoForExit(password)) {
+                return ActionResult.BACK;
+            }
 
             invokeAccountFactory(login, password);
+
         }
-        setSuccess(true);
+        result = ActionResult.SUCCESS;
+        return result;
     }
 
     private boolean isLocalProfileExist() {

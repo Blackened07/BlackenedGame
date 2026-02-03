@@ -1,21 +1,20 @@
-package org.blackened.game.ui.menuActions;
+package org.blackened.ui.menuActions;
 
-import org.blackened.db.account.GameAccount;
 import org.blackened.db.account.factory.AccountFactory;
 import org.blackened.game.Displayable;
 import org.blackened.game.entity.hero.Hero;
 import org.blackened.service.GameSession;
+import org.blackened.ui.ActionResult;
 import org.blackened.view.GameMessages;
 import org.blackened.view.View;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class MenuAction implements Displayable {
+public abstract class MenuAction implements Displayable {
     private final GameSession session;
     private final String title;
     private final View view;
-    private boolean isSuccess;
     private final Pattern ACCOUNT_NAME_PATTERN = Pattern.compile("^[A-Za-z0-9]{6,15}$");
 
     public MenuAction(String title, View view, GameSession session) {
@@ -24,24 +23,15 @@ public class MenuAction implements Displayable {
         this.session = session;
     }
 
-    public void execute(){};
+    public abstract ActionResult execute();
 
-    public Hero executeHero(){
-        return new Hero("");
+    @Override
+    public String getDisplayName() {
+        return title;
     }
-
-    public boolean isOperationSuccess() {
-        return isSuccess;
-    }
-
-
 
     protected GameSession getSession() {
         return session;
-    }
-
-    protected void setSuccess(boolean success) {
-        isSuccess = success;
     }
 
     protected View getView() {
@@ -52,33 +42,27 @@ public class MenuAction implements Displayable {
         return view.getLine();
     }
 
-    @Override
-    public String getDisplayName() {
-        return title;
-    }
-
     protected boolean isInputValid(String accountName) {
         return ACCOUNT_NAME_PATTERN.matcher(accountName).matches();
     }
 
-    protected String enterLogin() {
-        String login = getLine();
-
-        while (!isInputValid(login)) {
-            getView().render(GameMessages.PLEASE_TRY_AGAIN);
-            login = getLine();
-        }
-        return login;
+    protected void printExitText() {
+        getView().render(GameMessages.BACK_TEXT);
+        getView().render(GameMessages.GO_BACK);
     }
 
-    protected String enterPassword() {
-        String password = getLine();
+    protected boolean isInfoForExit(String login) {
+        return login.equals("1");
+    }
 
-        while (!isInputValid(password)) {
+    protected String getValidLine() {
+        String info = getLine();
+
+        while (!isInputValid(info)) {
             getView().render(GameMessages.PLEASE_TRY_AGAIN);
-            password = getLine();
+            info = getLine();
         }
-        return password;
+        return info;
     }
 
     protected void invokeAccountFactory(String login, String password) {
@@ -86,7 +70,6 @@ public class MenuAction implements Displayable {
             new AccountFactory(session)
                     .create(login, password);
             session.saveAccount();
-            setSuccess(true);
         } catch (Exception e) {
             System.err.println("LogIn is already exist!!!\nPlease chose another name:\n" + e.getMessage());
         }

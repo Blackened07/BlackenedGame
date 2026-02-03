@@ -2,6 +2,8 @@ package org.blackened.view;
 
 public enum GameMessages {
     PROVIDER("Chose a game type"),
+    BACK_TEXT("If you wanna go back, please enter 1"),
+    GO_BACK("1. Go Back"),
     MAIN_MENU_LABEL("****** ****** ****** WELCOME TO DEATH SATANIC ARENA GAME ****** ****** ****** "),
     REQUEST_TO_ENTER_MENU_POINT("Please enter menu point number"),
     HELL_ERROR("Burn In HEll"),

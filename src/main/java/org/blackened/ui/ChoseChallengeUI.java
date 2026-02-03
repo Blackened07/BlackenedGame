@@ -1,6 +1,6 @@
-package org.blackened.game.ui;
+package org.blackened.ui;
 
-import org.blackened.game.ui.menuActions.MenuAction;
+import org.blackened.ui.menuActions.MenuAction;
 import org.blackened.service.GameSession;
 import org.blackened.view.View;
 
@@ -21,7 +21,12 @@ public class ChoseChallengeUI extends ConsoleUI {
     //В ГЕЙМ СЕШН СДЕЛАТЬ МЕТОД ПРИНИМАЮЩИЙ ЕНАМ ТИПА ИГРЫ, ВЕРОЯТНО ЗАЮЗАТЬ САПЛАЕР
     //ВОЗВРАЩАЕМ ИГРУ - СЕТИМ В ПОЛЕ РАЗУМЕЕТСЯ (ПОЛЕ ТИПА ИНТЕРФЕЙС ГЕЙМ) И У ГЕЙМ ВЫЗЫВАЕМ РАН ИЛИ ТИПА ТОГО
     @Override
-    public void execute() {
+    public UIResponse execute() {
 
+    }
+
+    @Override
+    protected UIResponse resultHandler(ActionResult result, int index) {
+        return null;
     }
 }

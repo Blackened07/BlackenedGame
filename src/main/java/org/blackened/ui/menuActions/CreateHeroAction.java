@@ -1,8 +1,9 @@
-package org.blackened.game.ui.menuActions;
+package org.blackened.ui.menuActions;
 
 import org.blackened.game.entity.hero.Hero;
 import org.blackened.game.entity.hero.HeroesFactory;
 import org.blackened.service.GameSession;
+import org.blackened.ui.ActionResult;
 import org.blackened.view.GameMessages;
 import org.blackened.view.View;
 
@@ -18,7 +19,7 @@ public class CreateHeroAction extends MenuAction {
     }
 
     @Override
-    public Hero executeHero() {
+    public ActionResult execute() {
         //list of all heroes with description
         List<Hero> heroes = heroesFactory.getHeroes();
         getView().renderMenu(heroes, GameMessages.CHOSE_YOUR_HERO);
