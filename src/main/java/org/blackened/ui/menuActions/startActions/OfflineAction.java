@@ -34,17 +34,17 @@ public class OfflineAction extends MenuAction {
             getView().render(GameMessages.ACC_CREATION);
             printExitText();
 
-            String login = getValidLine();
+            String login = getValidLineForLogIn();
 
-            if (isInfoForExit(login)) {
+            if (isLineForExit(login)) {
                 return ActionResult.BACK;
             }
 
             getView().render(GameMessages.ACC_CREATION_PASSWORD_PHASE, login);
 
-            String password = getValidLine();
+            String password = getValidLineForLogIn();
 
-            if (isInfoForExit(password)) {
+            if (isLineForExit(password)) {
                 return ActionResult.BACK;
             }
 

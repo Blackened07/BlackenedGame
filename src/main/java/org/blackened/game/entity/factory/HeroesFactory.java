@@ -1,4 +1,6 @@
-package org.blackened.game.entity.hero;
+package org.blackened.game.entity.factory;
+import org.blackened.game.entity.hero.Hero;
+
 import java.util.List;
 
 public class HeroesFactory {

@@ -4,5 +4,6 @@ public enum UIResponse {
     BACK,
     RUN_ONLINE,
     RUN_ACCOUNT,
-    RUN_SELECT_CHALLENGE
+    RUN_SELECT_CHALLENGE,
+    EXIT
 }

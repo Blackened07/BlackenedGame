@@ -1,6 +1,5 @@
 package org.blackened.ui;
 
-import org.blackened.game.entity.hero.Hero;
 import org.blackened.ui.menuActions.MenuAction;
 import org.blackened.service.GameSession;
 import org.blackened.view.GameMessages;
@@ -21,20 +20,39 @@ public class GameAccountUI extends ConsoleUI {
 
     @Override
     public UIResponse execute() {
+        setRunning(true);
         UIResponse response = null;
+
+        var size = session.getHeroesListSize();
+
         while (isRunning()) {
+
             getView().renderMenu(getActions(), GameMessages.ACCOUNT_LABEL);
-            getView().renderMenu(session.getPlayerHeroesList(), GameMessages.YOUR_HEROES_LIST);
 
-            String input = getView().getLine();
+            if (size == 0) {
+                getView().render(GameMessages.YOUR_HEROES_LIST_IS_EMPTY);
+            } else {
+                getView().render(GameMessages.YOUR_HEROES_LIST, size);
+            }
 
-            int numericInput = parser(input);
+            String input = getValidLine();
+
+            if (input.equals("b")) {
+                response = UIResponse.BACK;
+                return  response;
+            }
+
+            int numericInput = getNumberEqualsPlayerInput(getActions(), input);
             int index = numericInput - 1;
 
             if (numericInput <= getActions().size()) {
                 MenuAction action = getActions().get(index);
                 ActionResult result = action.execute();
-                response = resultHandler(result, index);// КОТОРЫЙ ВЕРНЁТ ЕНАМ С ТЕМ ЧТО ДЕЛАТЬ ДАЛЕЕ (CONTINUE, EXIT и тд)
+                response = resultHandler(result, index);
+
+                if (response != null) {
+                    return response;
+                }
             } else {
                 getView().render(GameMessages.HELL_ERROR);
             }
@@ -45,7 +63,22 @@ public class GameAccountUI extends ConsoleUI {
 
     @Override
     protected UIResponse resultHandler(ActionResult result, int index) {
-        return null;
+        UIResponse response = null;
+
+        switch (result) {
+            case SUCCESS -> {
+                response = UIResponse.RUN_SELECT_CHALLENGE;
+            }
+            case CONTINUE -> {}
+            case BACK -> {
+                response = UIResponse.BACK;
+            }
+            default -> {
+                getView().render(GameMessages.HELL_ERROR);
+            }
+        }
+
+        return response;
     }
 
 

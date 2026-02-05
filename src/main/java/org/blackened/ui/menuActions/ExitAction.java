@@ -12,6 +12,6 @@ public class ExitAction extends MenuAction {
 
     @Override
     public ActionResult execute() {
-        System.exit(0);
+        return ActionResult.EXIT;
     }
 }

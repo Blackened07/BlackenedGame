@@ -22,7 +22,8 @@ public class ChoseChallengeUI extends ConsoleUI {
     //ВОЗВРАЩАЕМ ИГРУ - СЕТИМ В ПОЛЕ РАЗУМЕЕТСЯ (ПОЛЕ ТИПА ИНТЕРФЕЙС ГЕЙМ) И У ГЕЙМ ВЫЗЫВАЕМ РАН ИЛИ ТИПА ТОГО
     @Override
     public UIResponse execute() {
-
+        setRunning(true);
+        return UIResponse.BACK;
     }
 
     @Override

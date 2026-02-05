@@ -14,7 +14,7 @@ public class StartUI extends ConsoleUI {
 
     @Override
     public UIResponse execute() {
-
+        setRunning(true);
         getView().renderMenu(getActions(), GameMessages.MAIN_MENU_LABEL);
         getView().render(GameMessages.PROVIDER);
 
@@ -23,13 +23,14 @@ public class StartUI extends ConsoleUI {
         while (isRunning()) {
             String input = getView().getLine();
 
-            int numericInput = parser(input);
+            int numericInput = getNumberEqualsPlayerInput(getActions(), input);
             int index = numericInput - 1;
 
             if (numericInput <= getActions().size()) {
                 MenuAction action = getActions().get(index);
                 ActionResult result = action.execute();
-                response = resultHandler(result, index);// КОТОРЫЙ ВЕРНЁТ ЕНАМ С ТЕМ ЧТО ДЕЛАТЬ ДАЛЕЕ (CONTINUE, EXIT и тд)
+                response = resultHandler(result, index);
+                return response;// КОТОРЫЙ ВЕРНЁТ ЕНАМ С ТЕМ ЧТО ДЕЛАТЬ ДАЛЕЕ (CONTINUE, EXIT и тд)
             } else  {
                 getView().render(GameMessages.HELL_ERROR);
             }
@@ -55,6 +56,9 @@ public class StartUI extends ConsoleUI {
             }
             case CONTINUE -> {
                 // В ЭКШНЕ ДОЛЖНА БЫТЬ КНОПКА НАЗАД.. НАПРИМЕР В ОФФЛАЙН РЕГИСТРАЦИИ ЕСЛИ РЕШИЛИ ПОИГРАТЬ В ОНЛАЙН -Ю ВОЗВРАЩАЕМСЯ В СТАРТ МЕНЮ
+            }
+            case EXIT-> {
+                response = UIResponse.EXIT;
             }
             default -> {
                 getView().render(GameMessages.HELL_ERROR);

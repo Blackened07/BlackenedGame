@@ -18,15 +18,26 @@ public class ChoseHeroAction extends MenuAction {
     @Override
     public ActionResult execute() {
 
-        List<Hero> heroes = List.of();
+        List<Hero> heroes = getSession().getHeroesList();
 
-        if (!getSession().getPlayerHeroesList().isEmpty()) {
-            heroes = getSession().getPlayerHeroesList();
+        if (!heroes.isEmpty()) {
+            heroes = getSession().getHeroesList();
             getView().renderMenu(heroes, GameMessages.CHOSE_YOUR_HERO);
+            getView().render(GameMessages.BACK_TEXT);
+        } else {
+            getView().render(GameMessages.YOUR_HEROES_LIST_IS_EMPTY);
         }
 
-        int input = choseYourHero(heroes);
+        String line = getValidLine();
 
-        return heroes.get(input - 1);
+        if (isLineForExit(String.valueOf(line))) {
+            return ActionResult.CONTINUE;
+        }
+
+        int input = getNumberEqualsPlayerInput(heroes, line);
+
+        getSession().saveHero(input - 1);
+
+        return ActionResult.SUCCESS;
     }
 }

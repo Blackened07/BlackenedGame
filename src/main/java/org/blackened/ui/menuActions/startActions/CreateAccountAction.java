@@ -20,18 +20,18 @@ public class CreateAccountAction extends MenuAction {
         getView().render(GameMessages.ACC_CREATION);
         printExitText();
 
-        String login = getValidLine();
+        String login = getValidLineForLogIn();
 
-        if (isInfoForExit(login)) {
-            return ActionResult.BACK;
+        if (isLineForExit(login)) {
+            return ActionResult.CONTINUE;
         }
 
         getView().render(GameMessages.ACC_CREATION_PASSWORD_PHASE, login);
 
-        String password = getValidLine();
+        String password = getValidLineForLogIn();
 
-        if (isInfoForExit(login)) {
-            return ActionResult.BACK;
+        if (isLineForExit(login)) {
+            return ActionResult.CONTINUE;
         }
 
         invokeAccountFactory(login, password);

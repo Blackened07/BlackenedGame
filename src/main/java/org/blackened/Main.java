@@ -1,8 +1,9 @@
 package org.blackened;
 
+import org.blackened.db.account.factory.StorageFactory;
 import org.blackened.game.entity.hero.Elurion;
 import org.blackened.game.entity.hero.Grobul;
-import org.blackened.game.entity.hero.HeroesFactory;
+import org.blackened.game.entity.factory.HeroesFactory;
 import org.blackened.ui.*;
 import org.blackened.service.GameSession;
 import org.blackened.ui.factory.ConsoleUIFactory;
@@ -19,13 +20,14 @@ public class Main {
 
     public static void main(String[] args) {
 
-        GameSession session = new GameSession();
+        StorageFactory storageFactory = new StorageFactory();
 
         HeroesFactory heroesFactory = new HeroesFactory(
                 List.of(new Grobul("Grobul"),
                         new Elurion("Elurion"))
         );
 
+        GameSession session = new GameSession(storageFactory);
 
         View view = new ConsoleView();
 
@@ -38,8 +40,6 @@ public class Main {
 
         ConsoleUI challengeUI = new ChoseChallengeUI(view, challenges, session);
 
-
-
         List<MenuAction> start = List.of(
                 new OfflineAction("OffLine Game", view, session),
                 new OnlineAction("OnLine Game", view, session), // online menu
@@ -47,8 +47,6 @@ public class Main {
         );
 
         ConsoleUI startUI = new StartUI(view, start);
-
-        ///TODO СОЗДАТЬ КЛАСС УПРАВЛЕНИЯ МЕНЮ С ЛИФО СТЕКОМ И УПРАВЛЕНИЕМ ИМ
 
         Deque<ConsoleUI> stack = new ArrayDeque<>();
         stack.add(startUI);

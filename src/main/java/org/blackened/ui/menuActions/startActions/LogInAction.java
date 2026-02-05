@@ -18,18 +18,18 @@ public class LogInAction extends MenuAction {
         printExitText();
         getView().render(GameMessages.REQUEST_TO_ENTER_LOGIN);
 
-        String login = getValidLine();
+        String login = getValidLineForLogIn();
 
-        if (isInfoForExit(login)) {
-            return ActionResult.BACK;
+        if (isLineForExit(login)) {
+            return ActionResult.CONTINUE;
         }
 
         getView().render(GameMessages.REQUEST_TO_ENTER_PASSWORD);
 
-        String password = getValidLine();
+        String password = getValidLineForLogIn();
 
-        if (isInfoForExit(password)) {
-            return ActionResult.BACK;
+        if (isLineForExit(password)) {
+            return ActionResult.CONTINUE;
         }
         /// TODO НАДО ЧТОБЫ МЕТОД ПРИНИМАЛ ЛОГИН И ПАРОЛЬ! ДАЛЕЕ СТОРЕЙДЖ ОТПРАВЛЯЕТ ЗАПРОС НА СЕРВЕР!
         getSession().loadAccount();

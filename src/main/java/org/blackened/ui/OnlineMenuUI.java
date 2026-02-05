@@ -13,7 +13,7 @@ public class OnlineMenuUI extends ConsoleUI {
     }
 
     public UIResponse execute() {
-
+        setRunning(true);
         UIResponse response = null;
 
         while (isRunning()) {
@@ -22,15 +22,18 @@ public class OnlineMenuUI extends ConsoleUI {
             getView().render(GameMessages.REQUEST_TO_ENTER_MENU_POINT);
 
             while (isRunning()) {
-                String input = getView().getLine();
+                String input = getValidLine();
 
-                int numericInput = parser(input);
+                int numericInput = getNumberEqualsPlayerInput(getActions(), input);
                 int index = numericInput - 1;
 
                 if (numericInput <= getActions().size()) {
                     MenuAction action = getActions().get(index);
                     ActionResult result = action.execute();
-                    response = resultHandler(result, index);// КОТОРЫЙ ВЕРНЁТ ЕНАМ С ТЕМ ЧТО ДЕЛАТЬ ДАЛЕЕ (CONTINUE, EXIT и тд)
+                    response = resultHandler(result, index);
+                    if (response != null) {
+                        return response;
+                    }// КОТОРЫЙ ВЕРНЁТ ЕНАМ С ТЕМ ЧТО ДЕЛАТЬ ДАЛЕЕ (CONTINUE, EXIT и тд)
                 } else {
                     getView().render(GameMessages.HELL_ERROR);
                 }

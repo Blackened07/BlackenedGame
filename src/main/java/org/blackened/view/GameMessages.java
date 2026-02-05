@@ -2,8 +2,8 @@ package org.blackened.view;
 
 public enum GameMessages {
     PROVIDER("Chose a game type"),
-    BACK_TEXT("If you wanna go back, please enter 1"),
-    GO_BACK("1. Go Back"),
+    BACK_TEXT("If you wanna go back, please enter 'B'"),
+    GO_BACK("Go Back"),
     MAIN_MENU_LABEL("****** ****** ****** WELCOME TO DEATH SATANIC ARENA GAME ****** ****** ****** "),
     REQUEST_TO_ENTER_MENU_POINT("Please enter menu point number"),
     HELL_ERROR("Burn In HEll"),
@@ -14,7 +14,8 @@ public enum GameMessages {
     REQUEST_TO_ENTER_PASSWORD("Please enter your password"),
     ACCOUNT_LABEL("------Welcome to your account------"),
     CHOSE_YOUR_HERO("Chose your Hero"),
-    YOUR_HEROES_LIST("Your heroes");
+    YOUR_HEROES_LIST("Your have %d heroes"),
+    YOUR_HEROES_LIST_IS_EMPTY("Your heroes list is empty");;
 
     private final String message;
 

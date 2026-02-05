@@ -1,7 +1,7 @@
 package org.blackened.ui.menuActions;
 
 import org.blackened.game.entity.hero.Hero;
-import org.blackened.game.entity.hero.HeroesFactory;
+import org.blackened.game.entity.factory.HeroesFactory;
 import org.blackened.service.GameSession;
 import org.blackened.ui.ActionResult;
 import org.blackened.view.GameMessages;
@@ -23,11 +23,20 @@ public class CreateHeroAction extends MenuAction {
         //list of all heroes with description
         List<Hero> heroes = heroesFactory.getHeroes();
         getView().renderMenu(heroes, GameMessages.CHOSE_YOUR_HERO);
+        getView().render(GameMessages.BACK_TEXT);
         //take a hero and show description
 
+        String line = getValidLine();
 
-        int input = choseYourHero(heroes);
+        if (isLineForExit(String.valueOf(line))) {
+            return ActionResult.CONTINUE;
+        }
 
-        return heroesFactory.create(input);
+        int input = getNumberEqualsPlayerInput(heroes, line);
+
+        Hero hero = heroesFactory.create(input - 1);
+        getSession().setHeroToAccountList(hero);
+
+        return ActionResult.CONTINUE;
     }
 }

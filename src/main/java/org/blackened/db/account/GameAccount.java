@@ -32,10 +32,6 @@ public class GameAccount {
         return login;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public List<Hero> getHeroesList() {
         return heroes;
     }
@@ -45,7 +41,9 @@ public class GameAccount {
     }
 
     public void setHeroes(Hero hero) {
+
         heroes.add(hero);
+        save();
     }
 
     public boolean checkHeroesListIsNotEmpty() {

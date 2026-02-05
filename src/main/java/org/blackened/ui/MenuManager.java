@@ -38,6 +38,9 @@ public class MenuManager {
                 stack.push(uIFactory.createAccountMenu());
             }
             case RUN_SELECT_CHALLENGE -> {}
+            case EXIT -> {
+                System.exit(0);
+            }
         }
     }
 }

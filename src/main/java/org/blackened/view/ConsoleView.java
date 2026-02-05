@@ -30,6 +30,6 @@ public class ConsoleView implements View {
 
     @Override
     public String getLine() {
-        return scanner.nextLine();
+        return scanner.nextLine().toLowerCase();
     }
 }

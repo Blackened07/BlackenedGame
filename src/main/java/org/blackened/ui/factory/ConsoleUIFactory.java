@@ -1,6 +1,6 @@
 package org.blackened.ui.factory;
 
-import org.blackened.game.entity.hero.HeroesFactory;
+import org.blackened.game.entity.factory.HeroesFactory;
 import org.blackened.service.GameSession;
 import org.blackened.ui.ConsoleUI;
 import org.blackened.ui.GameAccountUI;
@@ -41,7 +41,8 @@ public class ConsoleUIFactory {
     public ConsoleUI createAccountMenu() {
         List<MenuAction> accItems = List.of(
                 new CreateHeroAction("Create new Hero", view, heroesFactory, session),
-                new ChoseHeroAction("Chose your Hero", view, session)
+                new ChoseHeroAction("Chose your Hero", view, session),
+                new GoBackAction("Back", view, session)
         );
 
         return new GameAccountUI(view, accItems, session);
