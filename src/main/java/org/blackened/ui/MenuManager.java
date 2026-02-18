@@ -2,7 +2,6 @@ package org.blackened.ui;
 
 import org.blackened.ui.factory.ConsoleUIFactory;
 
-
 import java.util.Deque;
 
 public class MenuManager {
@@ -16,13 +15,13 @@ public class MenuManager {
 
     public void start() {
         while (!stack.isEmpty()) {
+
             ConsoleUI current = stack.peek();
 
-            //waiting for response
             UIResponse response = current.execute();
 
-            //call response handler
             responseHandler(response);
+
         }
     }
 

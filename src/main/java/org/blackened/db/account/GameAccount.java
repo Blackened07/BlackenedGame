@@ -33,7 +33,7 @@ public class GameAccount {
     }
 
     public List<Hero> getHeroesList() {
-        return heroes;
+        return List.copyOf(heroes);
     }
 
     public Hero getHero(int index) {

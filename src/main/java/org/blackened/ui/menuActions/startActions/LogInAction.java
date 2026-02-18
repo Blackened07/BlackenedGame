@@ -1,6 +1,9 @@
 package org.blackened.ui.menuActions.startActions;
 
+import org.blackened.service.RegistrationSession;
+import org.blackened.service.SessionService;
 import org.blackened.ui.ActionResult;
+import org.blackened.ui.ConsoleInput;
 import org.blackened.ui.menuActions.MenuAction;
 import org.blackened.service.GameSession;
 import org.blackened.view.GameMessages;
@@ -8,8 +11,8 @@ import org.blackened.view.View;
 
 public class LogInAction extends MenuAction {
 
-    public LogInAction(String title, View view, GameSession session) {
-        super(title, view, session);
+    public LogInAction(String title, View view, ConsoleInput consoleInput, SessionService sessionService) {
+        super(title, view, consoleInput, sessionService);
     }
 
     @Override
@@ -18,21 +21,21 @@ public class LogInAction extends MenuAction {
         printExitText();
         getView().render(GameMessages.REQUEST_TO_ENTER_LOGIN);
 
-        String login = getValidLineForLogIn();
+        String login = getConsoleInput().getValidLineForLogIn();
 
-        if (isLineForExit(login)) {
+        if (getConsoleInput().isLineForExit(login)) {
             return ActionResult.CONTINUE;
         }
 
         getView().render(GameMessages.REQUEST_TO_ENTER_PASSWORD);
 
-        String password = getValidLineForLogIn();
+        String password = getConsoleInput().getValidLineForLogIn();
 
-        if (isLineForExit(password)) {
+        if (getConsoleInput().isLineForExit(password)) {
             return ActionResult.CONTINUE;
         }
         /// TODO НАДО ЧТОБЫ МЕТОД ПРИНИМАЛ ЛОГИН И ПАРОЛЬ! ДАЛЕЕ СТОРЕЙДЖ ОТПРАВЛЯЕТ ЗАПРОС НА СЕРВЕР!
-        getSession().loadAccount();
+        getRegistrationSession().loadAccount();
 
         return ActionResult.SUCCESS;
 

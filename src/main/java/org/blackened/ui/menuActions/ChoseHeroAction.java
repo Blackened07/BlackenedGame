@@ -2,7 +2,10 @@ package org.blackened.ui.menuActions;
 
 import org.blackened.game.entity.hero.Hero;
 import org.blackened.service.GameSession;
+import org.blackened.service.RegistrationSession;
+import org.blackened.service.SessionService;
 import org.blackened.ui.ActionResult;
+import org.blackened.ui.ConsoleInput;
 import org.blackened.view.GameMessages;
 import org.blackened.view.View;
 
@@ -10,33 +13,32 @@ import java.util.List;
 
 public class ChoseHeroAction extends MenuAction {
 
-    public ChoseHeroAction(String title, View view, GameSession session) {
-
-        super(title, view, session);
+    public ChoseHeroAction(String title, View view, ConsoleInput consoleInput, SessionService sessionService) {
+        super(title, view, consoleInput, sessionService);
     }
 
     @Override
     public ActionResult execute() {
 
-        List<Hero> heroes = getSession().getHeroesList();
+        List<Hero> heroes = getGameSession().getHeroesList();
 
         if (!heroes.isEmpty()) {
-            heroes = getSession().getHeroesList();
+            heroes = getGameSession().getHeroesList();
             getView().renderMenu(heroes, GameMessages.CHOSE_YOUR_HERO);
             getView().render(GameMessages.BACK_TEXT);
         } else {
             getView().render(GameMessages.YOUR_HEROES_LIST_IS_EMPTY);
         }
 
-        String line = getValidLine();
+        String line = getConsoleInput().getValidLine();
 
-        if (isLineForExit(String.valueOf(line))) {
+        if (getConsoleInput().isLineForExit(String.valueOf(line))) {
             return ActionResult.CONTINUE;
         }
 
-        int input = getNumberEqualsPlayerInput(heroes, line);
+        int input = getConsoleInput().getNumberEqualsPlayerInput(heroes, line);
 
-        getSession().saveHero(input - 1);
+        getGameSession().saveHero(input - 1);
 
         return ActionResult.SUCCESS;
     }

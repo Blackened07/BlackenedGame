@@ -8,8 +8,8 @@ import java.util.List;
 
 public class StartUI extends ConsoleUI {
 
-    public StartUI(View view, List<MenuAction> actions) {
-        super(view, actions);
+    public StartUI(View view, ConsoleInput consoleInput, List<MenuAction> actions) {
+        super(view, consoleInput, actions);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class StartUI extends ConsoleUI {
         while (isRunning()) {
             String input = getView().getLine();
 
-            int numericInput = getNumberEqualsPlayerInput(getActions(), input);
+            int numericInput = getConsoleInput().getNumberEqualsPlayerInput(getActions(), input);
             int index = numericInput - 1;
 
             if (numericInput <= getActions().size()) {

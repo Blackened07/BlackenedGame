@@ -1,6 +1,6 @@
 package org.blackened.view;
 
-import org.blackened.game.Displayable;
+import org.blackened.ui.menuActions.Displayable;
 
 import java.util.List;
 import java.util.Scanner;

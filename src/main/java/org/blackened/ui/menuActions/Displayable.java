@@ -1,4 +1,4 @@
-package org.blackened.game;
+package org.blackened.ui.menuActions;
 
 public interface Displayable {
 

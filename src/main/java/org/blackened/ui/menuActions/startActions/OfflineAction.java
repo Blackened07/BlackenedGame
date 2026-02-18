@@ -1,9 +1,11 @@
 package org.blackened.ui.menuActions.startActions;
 
+
+import org.blackened.service.SessionService;
 import org.blackened.service.StorageType;
 import org.blackened.ui.ActionResult;
+import org.blackened.ui.ConsoleInput;
 import org.blackened.ui.menuActions.MenuAction;
-import org.blackened.service.GameSession;
 import org.blackened.utils.JsonReader;
 import org.blackened.view.GameMessages;
 import org.blackened.view.View;
@@ -15,8 +17,8 @@ import java.nio.file.Paths;
 
 public class OfflineAction extends MenuAction {
 
-    public OfflineAction(String title, View view, GameSession session) {
-        super(title, view, session);
+    public OfflineAction(String title, View view, ConsoleInput consoleInput, SessionService sessionService) {
+        super(title, view, consoleInput, sessionService);
     }
 
     @Override
@@ -24,31 +26,31 @@ public class OfflineAction extends MenuAction {
 
         ActionResult result;
 
-        getSession().initStorage(StorageType.OFFLINE);
+        getRegistrationSession().initStorage(StorageType.OFFLINE);
 
         if (isLocalProfileExist()) {
             /// ТУТ ТОЖЕ ПРИДЁТСЯ ВВОДИТЬ ДАННЫЕ!!!
-            getSession().loadAccount();
+            getRegistrationSession().loadAccount();
 
         } else {
             getView().render(GameMessages.ACC_CREATION);
             printExitText();
 
-            String login = getValidLineForLogIn();
+            String login = getConsoleInput().getValidLineForLogIn();
 
-            if (isLineForExit(login)) {
+            if (getConsoleInput().isLineForExit(login)) {
                 return ActionResult.BACK;
             }
 
             getView().render(GameMessages.ACC_CREATION_PASSWORD_PHASE, login);
 
-            String password = getValidLineForLogIn();
+            String password = getConsoleInput().getValidLineForLogIn();
 
-            if (isLineForExit(password)) {
+            if (getConsoleInput().isLineForExit(password)) {
                 return ActionResult.BACK;
             }
 
-            invokeAccountFactory(login, password);
+            createAccount(login, password);
 
         }
         result = ActionResult.SUCCESS;

@@ -1,22 +1,26 @@
 package org.blackened.ui.menuActions;
 
+import org.blackened.db.account.GameAccount;
 import org.blackened.db.account.factory.AccountFactory;
-import org.blackened.game.Displayable;
 import org.blackened.service.GameSession;
+import org.blackened.service.RegistrationSession;
+import org.blackened.service.SessionService;
 import org.blackened.ui.ActionResult;
 import org.blackened.ui.ConsoleInput;
 import org.blackened.view.GameMessages;
 import org.blackened.view.View;
 
-public abstract class MenuAction extends ConsoleInput implements Displayable {
-
-    private final GameSession session;
+public abstract class MenuAction implements Displayable {
+    private final View view;
+    private final ConsoleInput consoleInput;
+    private final SessionService sessionService;
     private final String title;
 
-    public MenuAction(String title, View view, GameSession session) {
-        super(view);
+    public MenuAction(String title, View view, ConsoleInput consoleInput, SessionService sessionService) {
+        this.view = view;
         this.title = title;
-        this.session = session;
+        this.consoleInput = consoleInput;
+        this.sessionService = sessionService;
     }
 
     public abstract ActionResult execute();
@@ -26,8 +30,20 @@ public abstract class MenuAction extends ConsoleInput implements Displayable {
         return title;
     }
 
-    protected GameSession getSession() {
-        return session;
+    protected View getView() {
+        return view;
+    }
+
+    protected ConsoleInput getConsoleInput() {
+        return consoleInput;
+    }
+
+    protected GameSession getGameSession() {
+        return sessionService.getGameSession();
+    }
+
+    protected RegistrationSession getRegistrationSession() {
+        return sessionService.getRegistrationSession();
     }
 
     protected void printExitText() {
@@ -35,11 +51,12 @@ public abstract class MenuAction extends ConsoleInput implements Displayable {
         getView().render(GameMessages.GO_BACK);
     }
 
-    protected void invokeAccountFactory(String login, String password) {
+    protected void createAccount(String login, String password) {
         try {
-            new AccountFactory(session)
+            GameAccount account = new AccountFactory()
                     .create(login, password);
-            session.saveAccount();
+            getGameSession().setAccount(account);
+            getRegistrationSession().saveAccount();
         } catch (Exception e) {
             System.err.println("LogIn is already exist!!!\nPlease chose another name:\n" + e.getMessage());
         }

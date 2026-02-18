@@ -11,8 +11,8 @@ public class GameAccountUI extends ConsoleUI {
 
     private final GameSession session;
 
-    public GameAccountUI(View view, List<MenuAction> actions, GameSession session) {
-        super(view, actions);
+    public GameAccountUI(View view, ConsoleInput consoleInput, List<MenuAction> actions, GameSession session) {
+        super(view, consoleInput, actions);
         this.session = session;
     }
 
@@ -35,14 +35,14 @@ public class GameAccountUI extends ConsoleUI {
                 getView().render(GameMessages.YOUR_HEROES_LIST, size);
             }
 
-            String input = getValidLine();
+            String input = getConsoleInput().getValidLine();
 
             if (input.equals("b")) {
                 response = UIResponse.BACK;
                 return  response;
             }
 
-            int numericInput = getNumberEqualsPlayerInput(getActions(), input);
+            int numericInput = getConsoleInput().getNumberEqualsPlayerInput(getActions(), input);
             int index = numericInput - 1;
 
             if (numericInput <= getActions().size()) {

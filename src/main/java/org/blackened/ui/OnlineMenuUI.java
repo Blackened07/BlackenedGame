@@ -8,8 +8,8 @@ import java.util.List;
 
 public class OnlineMenuUI extends ConsoleUI {
 
-    public OnlineMenuUI(View view, List<MenuAction> actions) {
-        super(view, actions);
+    public OnlineMenuUI(View view, ConsoleInput consoleInput, List<MenuAction> actions) {
+        super(view, consoleInput, actions);
     }
 
     public UIResponse execute() {
@@ -22,9 +22,9 @@ public class OnlineMenuUI extends ConsoleUI {
             getView().render(GameMessages.REQUEST_TO_ENTER_MENU_POINT);
 
             while (isRunning()) {
-                String input = getValidLine();
+                String input = getConsoleInput().getValidLine();
 
-                int numericInput = getNumberEqualsPlayerInput(getActions(), input);
+                int numericInput = getConsoleInput().getNumberEqualsPlayerInput(getActions(), input);
                 int index = numericInput - 1;
 
                 if (numericInput <= getActions().size()) {

@@ -10,10 +10,11 @@ public class ChoseChallengeUI extends ConsoleUI {
 
     private final GameSession session;
 
-    public ChoseChallengeUI(View view, List<MenuAction> actions, GameSession session) {
-        super(view, actions);
+    public ChoseChallengeUI(View view, ConsoleInput consoleInput, List<MenuAction> actions, GameSession session) {
+        super(view, consoleInput, actions);
         this.session = session;
     }
+
     //ВЫБОР ЧЕЛЕНЖА ТИПА ДУЕЛЬ, БОСС, ДАНЖ И ТД.. И СООТВЕТСТВЕННО ЕГО ЗАПУСК ИЗ ФАБРИКИ СУДЯ ПО ВСЕМУ
     //ВНУТРИ ЧЕЛЕНДЖА ВЫБОР КОНКРЕТНОСТИ. ДУЕЛЬ ПРОТИВ 1 2 3 4 И ТД - ВОТ ТУТ И ВКЛЮЧАЕТСЯ ФАБРИКА
     //ПРОДУМАТЬ КАК СЕТИТЬ\СОЗДАВАТЬ ИГРУ

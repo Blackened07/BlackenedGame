@@ -10,50 +10,46 @@ public class ConsoleInput {
 
     private final View view;
 
-    private final Pattern INPUT_PATTERN = Pattern.compile("^[Bb0-9]$");
-    private final Pattern ACCOUNT_NAME_PATTERN = Pattern.compile("^[A-Za-z0-9]{6,15}$");
+    private static final Pattern INPUT_PATTERN = Pattern.compile("^[Bb0-9]$");
+    private static final Pattern ACCOUNT_NAME_PATTERN = Pattern.compile("^[A-Za-z0-9]{6,15}$");
 
     public ConsoleInput(View view) {
-
         this.view = view;
     }
 
-    protected View getView() {
-        return view;
-    }
-
-    protected String getValidLineForLogIn() {
+    public String getValidLineForLogIn() {
         String info = getLine();
 
         while (!isInputValidForLogIn(info)) {
-            getView().render(GameMessages.PLEASE_TRY_AGAIN);
+            view.render(GameMessages.PLEASE_TRY_AGAIN);
             info = getLine();
         }
         return info;
     }
 
-    protected String getValidLine() {
+    public String getValidLine() {
         String line = getLine();
 
         while (!isInputValid(line)) {
-            getView().render(GameMessages.PLEASE_TRY_AGAIN);
+            view.render(GameMessages.PLEASE_TRY_AGAIN);
             line = getLine();
         }
         return line;
     }
 
-    protected int getNumberEqualsPlayerInput(List<?> src, String input) {
+    public int getNumberEqualsPlayerInput(List<?> src, String input) {
 
         int inputNumeric = parse(input);
 
         while (inputNumeric > src.size()) {
-            getView().render(GameMessages.PLEASE_TRY_AGAIN);
+            view.render(GameMessages.PLEASE_TRY_AGAIN);
             inputNumeric = parse(getLine());
         }
         return inputNumeric;
     }
 
-    protected boolean isLineForExit(String login) {
+    public boolean isLineForExit(String login) {
+
         return login.equals("b");
     }
 
