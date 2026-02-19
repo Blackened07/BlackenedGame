@@ -50,13 +50,13 @@ public abstract class MenuAction implements Displayable {
         getView().render(GameMessages.BACK_TEXT);
         getView().render(GameMessages.GO_BACK);
     }
-
+    /// Если ошибка - надо сообщить и вернуться в стартУИ
     protected void createAccount(String login, String password) {
         try {
             GameAccount account = new AccountFactory()
                     .create(login, password);
             getGameSession().setAccount(account);
-            getRegistrationSession().saveAccount();
+            getRegistrationSession().saveAccount(account);
         } catch (Exception e) {
             System.err.println("LogIn is already exist!!!\nPlease chose another name:\n" + e.getMessage());
         }

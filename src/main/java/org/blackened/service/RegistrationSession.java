@@ -30,6 +30,7 @@ public class RegistrationSession {
     }
 
     public void setAccount(GameAccount account) {
+
         this.account = account;
     }
 
@@ -40,7 +41,7 @@ public class RegistrationSession {
         }
     }
 
-    public void saveAccount() {
+    public void saveAccount(GameAccount account) {
 
         storage.save(account);
     }

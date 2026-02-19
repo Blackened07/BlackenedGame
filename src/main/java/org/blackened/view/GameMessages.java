@@ -10,6 +10,7 @@ public enum GameMessages {
     ACC_CREATION("Welcome to Account Creator\nPlease enter your LogIn:\nLogIn can contains only english letters and arabic numbers:"),
     ACC_CREATION_PASSWORD_PHASE("Your LogIn is: %s\nPlease enter your password with only english letters and arabic numbers:"),
     PLEASE_TRY_AGAIN("Please try again"),
+    PLEASE_TRY_AGAIN_WITH_MORE_SYMBOLS("Password should be contains more than 6 symbols"),
     REQUEST_TO_ENTER_LOGIN("Please enter your LogIn"),
     REQUEST_TO_ENTER_PASSWORD("Please enter your password"),
     ACCOUNT_LABEL("------Welcome to your account------"),

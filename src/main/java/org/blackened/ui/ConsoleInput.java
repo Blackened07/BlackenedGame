@@ -21,7 +21,11 @@ public class ConsoleInput {
         String info = getLine();
 
         while (!isInputValidForLogIn(info)) {
-            view.render(GameMessages.PLEASE_TRY_AGAIN);
+            if (info.length() < 6) {
+                view.render(GameMessages.PLEASE_TRY_AGAIN_WITH_MORE_SYMBOLS);
+            } else {
+                view.render(GameMessages.PLEASE_TRY_AGAIN);
+            }
             info = getLine();
         }
         return info;
